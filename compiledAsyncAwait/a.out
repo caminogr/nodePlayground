@@ -1,0 +1,57 @@
+const sleep = time => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+};
+
+const asyncAwait1 = function (num) {
+  try {
+    console.log('aa1');
+    return Promise.resolve(num).then(function (_num) {
+      return _num * 2;
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const asyncAwait2 = function (num) {
+  try {
+    console.log('aa2');
+    return Promise.resolve(num).then(function (_num2) {
+      return _num2 + 3;
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const asyncAwait3 = function (num) {
+  try {
+    console.log('aa3');
+    return Promise.resolve(num).then(function (_num3) {
+      return _num3 * 4;
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const asyncAwait = function () {
+  try {
+    return Promise.resolve(asyncAwait1(1)).then(function (aa1) {
+      console.log('hoge');
+      return Promise.resolve(asyncAwait2(aa1)).then(function (aa2) {
+        return Promise.resolve(asyncAwait3(aa2)).then(function () {});
+      });
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+asyncAwait().catch(error => {
+  console.log(error);
+});
